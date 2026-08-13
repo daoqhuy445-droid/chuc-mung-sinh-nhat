@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bất ngờ chưa!</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Nút bấm hình nền bẫy ban đầu */
+        #click-overlay {
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+        }
+
+        /* Vùng hiển thị ảnh hù dọa (Mặc định ẩn) */
+        #scare-container {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #scare-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình bẫy dụ người dùng click -->
+    <div id="click-overlay">
+        Click vào đây để tiếp tục...
+    </div>
+
+    <!-- Màn hình jumpscare -->
+    <div id="scare-container">
+        <img id="scare-image" src="https://i.imgur.com/vHq4Q5m.jpg" alt="Jumpscare">
+    </div>
+
+    <!-- File âm thanh hù dọa -->
+    <audio id="scare-sound" src="https://www.soundjay.com/human/screaming-01.mp3" preload="auto"></audio>
+
+    <script>
+        const overlay = document.getElementById('click-overlay');
+        const container = document.getElementById('scare-container');
+        const sound = document.getElementById('scare-sound');
+
+        overlay.addEventListener('click', function() {
+            // 1. Ẩn màn hình chờ, hiện màn hình hù dọa
+            overlay.style.display = 'none';
+            container.style.display = 'block';
+
+            // 2. Phát âm thanh ở mức âm lượng tối đa
+            sound.volume = 1.0;
+            sound.play();
+
+            // 3. Yêu cầu bật Toàn màn hình (Fullscreen)
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { /* Safari / iOS */
+                document.documentElement.webkitRequestFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
